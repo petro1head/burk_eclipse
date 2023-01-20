@@ -49,11 +49,11 @@ add_executable(
   LibNiisi/devices/spi.c
   src/main.c
   src/io.c
-  src/vmeInit.c
-  LibNiisi/devices/spw_lib.c
-  libVme/src/Mcp/mcpMemoryController.c
-  libVme/src/Mcp/mcpSpw.c
-  libVme/src/bistTest.c
+# src/vmeInit.c
+#  LibNiisi/devices/spw_lib.c
+#  libVme/src/Mcp/mcpMemoryController.c
+#  libVme/src/Mcp/mcpSpw.c
+#  libVme/src/bistTest.c
   
 
 )

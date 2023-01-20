@@ -4,11 +4,31 @@
  *  Created on: 20.06.2018
  *      Author: Dmitry
  */
-#include "vmeInit.h"
+//#include "vmeInit.h"
 
-//#include <string.h>
-//#include <stdlib.h>
+#include <string.h>
+#include <stdlib.h>
+/*
+int	_raise_r(struct _reent * a, int b)
+{
+	return 0;
+}
+*/
 
+int _getpid_r(struct _reent * a)
+{
+	return 0;
+}
+
+int _kill_r(struct _reent * a, int b, int c)
+{
+	return 0;
+}
+
+_PTR _calloc_r(struct _reent * a, size_t b, size_t c)
+{
+	return 0;
+}
 
 //int testFunc(int testVar)
 //{
@@ -87,6 +107,8 @@
 #include "uart.h"
 #include "io.h"
 
+
+
 // GPIO base address
 //#define	GPIO_BASE   0xBFF00700
 
@@ -132,10 +154,10 @@
 
 /*------------- delay ---------------*/
 
-//void delay(int iter)
-//{
-//	for (volatile int i = 0; i < iter; ++i);
-//}
+void delay(int iter)
+{
+	for (volatile int i = 0; i < iter; ++i);
+}
 
 /*-------------Initialization GPIO-------------*/
 
@@ -174,6 +196,26 @@ volatile GPIO_UNIT *GPIO = (GPIO_UNIT *)GPIO_BASE;
 unsigned char data;// bitstream
 int m = 0;// 1 bit
 
+	char *str = "123.12345678";
+	double d;
+	d = atof(str);
+
+
+	char *str1 = "55555346";
+	unsigned long int l;
+	l = atol(str1);
+
+	char *str2 = "123";
+	int i;
+	i = atoi(str2);
+
+char dst1[10] = "11111111";
+char dst2[10] = "";
+
+//strncpy (dst2, dst1, 5); // work
+
+strcpy (dst2, dst1);
+
 gpio_init();
 //  nCONFIG, DCLK, DATA0 - output (1)
 // 	nSTATUS, CONF_DONE - input, because they need to be read (0)
@@ -181,7 +223,7 @@ gpio_init();
 GPIO->DIR = (1<<nCONFIG)|(1<<DCLK)|(1<<DATA0)|(0<<nSTATUS)|(0<<CONF_DONE);
 GPIO->OUT = (0<<nCONFIG)|(0<<DCLK)|(0<<DATA0);
 
-delay(10);
+//delay(10);
 
 // set nCONFIG in high state ( 0 -> 1)
 GPIO->OUT |= (1<<nCONFIG);
@@ -195,24 +237,24 @@ unsigned char * end_add = (unsigned char *)END_OF_ARRAY;
 
 if ((GPIO->IN >> nSTATUS) & 1) // true
    {
-		ton10(1);
-		tos("\n");
+		//ton10(1);
+		//tos("\n");
    }
 else
 	{
-		ton10(0);
-		tos("\n");
+		//ton10(0);
+		//tos("\n");
 	}
 
 if (((GPIO->IN >> CONF_DONE)&1) == 0)
    {
-		ton10(0);
-		tos("\n");
+		//ton10(0);
+		//tos("\n");
    }
 else
 	{
-		ton10(1);
-		tos("\n");
+		//ton10(1);
+		//tos("\n");
 	}
 
 
