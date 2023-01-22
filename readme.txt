@@ -19,7 +19,7 @@ SET(CMAKE_FIND_ROOT_PATH  c:/Compilers/mingw+msys+mips-rtems4.10/opt/mips-rtems4
 Выбрать файл бинарников C/C++ application: 
 C:\work\workNew\vme\vmeTechProject\bin\vmeTech
 
-? GDB command ??????? ??? ????? GDB:
+? GDB command  GDB:
 C:\Compilers\mingw+msys+mips-rtems4.10\opt\mips-rtems4.10\bin\mips-rtems4.10-gdb.exe
 
 Выбрать отладчик , JTAG Device OpenOCD(via socket)
