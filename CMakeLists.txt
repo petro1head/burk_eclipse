@@ -41,12 +41,12 @@ add_executable(
   startup/startup_auto.S
   startup/io.S
   startup/flushcache.S
-  LibNiisi/devices/sys_unit.c
-  LibNiisi/devices/gpio.c
+ # LibNiisi/devices/sys_unit.c
+ # LibNiisi/devices/gpio.c
   LibNiisi/devices/uart.c
-  LibNiisi/devices/mkio.c
-  LibNiisi/devices/timer.c
-  LibNiisi/devices/spi.c
+ # LibNiisi/devices/mkio.c
+ # LibNiisi/devices/timer.c
+ # LibNiisi/devices/spi.c
   src/main.c
   src/io.c
 # src/vmeInit.c
