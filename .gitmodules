@@ -1,9 +1,0 @@
-[submodule "LibNiisi"]
-	path = LibNiisi
-	url = ssh://dmitry@172.20.54.222/~/GitRepos/Vmr/LibNiisi.git
-[submodule "startup"]
-	path = startup
-	url = ssh://dmitry@172.20.54.222/~/GitRepos/Vmr/startup.git
-[submodule "LibVme"]
-	path = LibVme
-	url = ssh://dmitry@172.20.54.222/~/GitRepos/Vmr/LibVme.git
