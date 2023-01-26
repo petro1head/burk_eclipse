@@ -49,6 +49,7 @@ add_executable(
  # LibNiisi/devices/spi.c
   src/main.c
   src/io.c
+  src/burk_function.c
 # src/vmeInit.c
 #  LibNiisi/devices/spw_lib.c
 #  libVme/src/Mcp/mcpMemoryController.c
