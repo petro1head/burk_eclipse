@@ -52,17 +52,17 @@ int parse(unsigned long * t, double *speed, char data[100])
 
 void outPrintln(MySystem *ps) {
  // Serial.println(SystemOut());
-	uart_send_number(1, SystemOut(ps));
+	uart_send_number(0, SystemOut(ps));
 }
 
 int main(void) {
 
-	volatile UART_UNIT * uart1 = (UART_UNIT*) 0xBFF00800;
-	uart1 -> IIRF = 0xff; //fifo
-	uart1 -> IIRF = 0xff;
+	volatile UART_UNIT * uart0 = (UART_UNIT*) 0xBFF00100;
+	uart0 -> IIRF = 0xff; //fifo
+	uart0 -> IIRF = 0xff;
 
-	uart_baud_set(1, 26); // baud 57600 bit/s
-	uart1 -> LCR = 3; //  8 bit data, no parity, 1 stop bit // uart1->LCR = (1<<0)|(1<<1)
+	uart_baud_set(0, 26); // baud 57600 bit/s
+	uart0 -> LCR = 3; //  8 bit data, no parity, 1 stop bit // uart1->LCR = (1<<0)|(1<<1)
 
 	unsigned long t = 0;
 	double speed = 0;
@@ -77,11 +77,11 @@ int main(void) {
 	MySystem s;
 	set_default(&s);
 
-	uart_send_string(1, (unsigned char *)"OK");
+	uart_send_string(0, (unsigned char *)"OK");
 
 	while (1) {
-		if (uart_check_in(1)) {
-			c = uart_read_byte(1);
+		if (uart_check_in(0)) {
+			c = uart_read_byte(0);
 			if (c == '\n') {
 				// Cut the data from QT
 				buf.str[buf.len] = '\0';
