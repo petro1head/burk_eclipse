@@ -1,6 +1,7 @@
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <math.h>
 #include "uart.h"
 #include "chip_vm014.h"
 #include "devdescr.h"
@@ -17,6 +18,36 @@ int _kill_r(struct _reent *a, int b, int c) {
 }
 
 _PTR _calloc_r(struct _reent *a, size_t b, size_t c) {
+	return 0;
+}
+
+void _free_r(struct _reent * a, _PTR v) {}
+
+_PTR _malloc_r (struct _reent * a, size_t c)
+{
+	return 0;
+}
+
+_PTR _realloc_r (struct _reent * q, _PTR e, size_t t)
+{
+	return 0;
+}
+
+int _close_r(struct _reent * q, int w)
+{
+	return 0;
+}
+
+_off_t _lseek_r (struct _reent * q, int r, _off_t u, int i)
+{
+	return 0;
+}
+_ssize_t _read_r (struct _reent *q, int w, void * e, size_t t)
+{
+	return 0;
+}
+_ssize_t _write_r  (struct _reent * y, int i, const void * p, size_t x)
+{
 	return 0;
 }
 
@@ -47,7 +78,7 @@ void outPrintln(MySystem *ps) {
 	// Serial.println(SystemOut());
 	//uart_send_number(0, SystemOut(ps));
 	char string [10];
-	sprintf (string, "%lf.3\n",SystemOut(ps));
+	sprintf (string, "%lf\n",SystemOut(ps));
 	uart_send_string(0, (unsigned char*) string);
 }
 
@@ -73,12 +104,19 @@ int main(void) {
 	MySystem s;
 	set_default(&s);
 
-	uart_send_string(0, (unsigned char*) "OK");
+	char ok_string[5] = "OK";
+	strcat(ok_string, "\n");
+	uart_send_string(0, (unsigned char*)ok_string);
+
+	//uart_send_string(0, (unsigned char*) "OK");
+
 
 	while (1) {
-		if (uart_check_in(0)) {
+		if (uart_check_in(0))
+		{
 			c = uart_read_byte(0);
-			if (c == '\n') {
+			if (c == '\n')
+			{
 				// Cut the data from QT
 				buf.str[buf.len] = '\0';
 				// Copy data from buffer
@@ -102,13 +140,13 @@ int main(void) {
 			// down flag for new read data
 			readed_data = 0;
 			// parse data
-	//			if (parse(&t, &speed, qt_data))
-	//			{
-	//				// system process run
-	//				SystemRun(&s, t, speed);
-	//				outPrintln(&s);
-	//
-	//			}
+//				if (parse(&t, &speed, qt_data))
+//				{
+//					// system process run
+//					SystemRun(&s, t, speed);
+//					outPrintln(&s);
+//
+//				}
 			if (sscanf(qt_data, "%lu;%lf", &t, &speed))
 			{
 				// system process run
@@ -119,7 +157,7 @@ int main(void) {
 			else
 			{
 				//char bad_string[100] = "bad";
-				char bad_string[100];
+				char bad_string[30];
 
 				// bad string
 				//sprintf (bad_string, "%s\n", qt_data);

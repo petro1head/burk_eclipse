@@ -1,4 +1,6 @@
 #include "burk_function.h"
+#include <math.h>
+#include <stdlib.h>
 
 //default setting function
 void set_default(MySystem *ps) {
@@ -24,6 +26,7 @@ void set_default(MySystem *ps) {
 	ps->ft.t_off = 0;
 	ps->ft.t_on = 0;
 	ps->ft.u = 0;
+
 }
 
 // интегратор (угол)
@@ -77,9 +80,9 @@ void gainIn(MySystem *ps, double in_u) {
 // Saturation
 void saturationIn(MySystem *ps, double in_u) {
 	// Верхняя граница сигнала
-	double upper = 0.25;
+	double upper = 0.5;
 	// Нижняя граница сигнала
-	double lower = -0.25;
+	double lower = -0.5;
 
 	if (in_u >= upper) {
 		ps->sat.u = upper;
@@ -94,12 +97,13 @@ void saturationIn(MySystem *ps, double in_u) {
 void relayIn(MySystem *ps, double in_u, double sp, double an) {
 
 	// Порог срабатывания реле
-	double positive = 0.125;
-	double negative = -0.125;
+	double positive = 0.03;
+	double negative = -0.03;
 
-	if (sp < 0.08 && an < 0.4) {
-		positive = 0.03;
-		negative = -0.03;
+	// При малых углах и угловых скоростях меняем параметры реле
+	if (abs(sp) < 0.03 && abs(an) < 0.125) {
+		positive = 0.125;
+		negative = -0.125;
 	}
 
 	// Преобразуем сигнал либо к -1, либо 0, либо 1
@@ -117,10 +121,10 @@ void relayIn(MySystem *ps, double in_u, double sp, double an) {
 
 void regulatorIn(MySystem *ps, unsigned long t, double speed) {
 	integratorIn(ps, speed, t);
-	summatorIn2(ps, -ps->integ.s, -ps->disc_integrator.u);
+	summatorIn2(ps, -(ps->integ.s), -(ps->disc_integrator.u));
 	gainIn(ps, ps->sum2.u);
 	saturationIn(ps, ps->gain.u);
-	summatorIn3(ps, -speed, ps->sat.u, -ps->relay.u);
+	summatorIn3(ps, -(speed), ps->sat.u, -(ps->relay.u));
 	disc_integratorIn(ps, ps->sum3.u, t);
 	relayIn(ps, ps->disc_integrator.u, speed, ps->integ.s);
 }
