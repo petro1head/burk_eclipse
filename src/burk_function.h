@@ -8,15 +8,15 @@
 #ifndef SRC_BURK_FUNCTION_H_
 #define SRC_BURK_FUNCTION_H_
 
-// структура интегратора (угол)
-typedef struct Integ {
-	// выходной сигнал
-	double s;
-	// дельта - дискретность интегратора
-	unsigned long h;
-	// предыдущее значение
-	double t_before;
-} Integ;
+//// структура интегратора (угол)
+//typedef struct Integ {
+//	// выходной сигнал
+//	double s;
+//	// дельта - дискретность интегратора
+//	unsigned long h;
+//	// предыдущее значение
+//	double t_before;
+//} Integ;
 
 // структура сумматора
 typedef struct Sum {
@@ -74,7 +74,7 @@ typedef struct F_ot_tau {
 typedef struct MySystem {
 	// Глобальные переменные
 	// переменная типа структуры интегратора (угла)
-	Integ integ;
+	// Integ integ;
 	// переменная типа структуры сумматора
 	Sum sum2;  // суммирует 2 сигнала
 	Sum sum3;  // суммирует 3 сигнала
@@ -82,7 +82,9 @@ typedef struct MySystem {
 	Gain gain;
 	// переменная типа структуры насыщения
 	Saturation sat;
-	// переменная типа структуры дискретного интегратора
+	// переменная типа структуры дискретного интегратора1
+	Disc_Integ disc_integrator_angle;
+	// переменная типа структуры дискретного интегратора2
 	Disc_Integ disc_integrator;
 	// переменная типа структуры реле
 	Relay relay;

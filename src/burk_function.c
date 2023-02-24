@@ -4,9 +4,9 @@
 
 //default setting function
 void set_default(MySystem *ps) {
-	ps->integ.s = 0;
-	ps->integ.h = 0;
-	ps->integ.t_before = 0;
+//	ps->integ.s = 0;
+//	ps->integ.h = 0;
+//	ps->integ.t_before = 0;
 
 	ps->disc_integrator.t_before = 0;
 	ps->disc_integrator.u = 0;
@@ -29,12 +29,12 @@ void set_default(MySystem *ps) {
 
 }
 
-// интегратор (угол)
-void integratorIn(MySystem *ps, double in_u, unsigned long t) {
-	ps->integ.h = t - ps->integ.t_before;
-	ps->integ.s += in_u * ps->integ.h * 0.001;
-	ps->integ.t_before = t;
-}
+//// интегратор (угол)
+//void integratorIn(MySystem *ps, double in_u, unsigned long t) {
+//	ps->integ.h = t - ps->integ.t_before;
+//	ps->integ.s += in_u * ps->integ.h * 0.001;
+//	ps->integ.t_before = t;
+//}
 
 /* Дискретный интегратор */
 /* Подаём на вход сигнал */
@@ -120,13 +120,13 @@ void relayIn(MySystem *ps, double in_u, double sp, double an) {
 // Regulator
 
 void regulatorIn(MySystem *ps, unsigned long t, double speed) {
-	integratorIn(ps, speed, t);
-	summatorIn2(ps, -(ps->integ.s), -(ps->disc_integrator.u));
+	disc_integratorIn (ps, speed, t);
+	summatorIn2(ps, -(ps->disc_integrator_angle.u), -(ps->disc_integrator.u));
 	gainIn(ps, ps->sum2.u);
 	saturationIn(ps, ps->gain.u);
 	summatorIn3(ps, -(speed), ps->sat.u, -(ps->relay.u));
 	disc_integratorIn(ps, ps->sum3.u, t);
-	relayIn(ps, ps->disc_integrator.u, speed, ps->integ.s);
+	relayIn(ps, ps->disc_integrator.u, speed, ps->disc_integrator_angle.u);
 }
 
 /* Ф от тау */
